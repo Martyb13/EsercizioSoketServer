@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketServer_Esercizio", "SocketServer_Esercizio\SocketServer_Esercizio.csproj", "{E7BBF2D6-BA2C-44A8-811C-561EC2183A90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatbotServer", "SocketServer_Esercizio\ChatbotServer.csproj", "{E7BBF2D6-BA2C-44A8-811C-561EC2183A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
