@@ -44,6 +44,9 @@ namespace ChatbotServer
             int receivedBytes = 0;
             int sendedBytes = 0;
             string receivedString, sendString;
+            
+            //crea il messaggio
+            sendString = "Benvenuto client";
 
             while (true)
             {
@@ -51,27 +54,40 @@ namespace ChatbotServer
                 Console.WriteLine("Numero di byte ricevuti:" + receivedBytes);
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta:" + receivedString);
-
-                if(receivedString.ToUpper()== "QUI")
+                if(receivedString != "\r\n")
                 {
-                    break;
-                }
+                    Array.Clear(buff, 0, buff.Length);
+                    sendedBytes = 0;
+                    
+                    if (receivedString.ToUpper() == "QUI")
+                    {
+                        break;
+                    }
+                    else if( receivedString.ToLower()=="ciao")
+                    {
+                        sendString = "ciao";
+                    }
+                    else if (receivedString.ToLower() == "come stai?")
+                    {
+                        sendString = "bene";
+                    }
+                    else if (receivedString.ToLower() == "che fai?")
+                    {
+                        sendString = "niente";
+                    }
+                   
+                    //lo converto in byte
+                    buff = Encoding.ASCII.GetBytes(sendString);
 
-                Array.Clear(buff, 0, buff.Length);
-                sendedBytes = 0;
+                    //invio al client il messaggio
+                    sendedBytes = client.Send(buff);
 
-                //crea il messaggio
-                sendString = "Benvenuto client";
+                    Array.Clear(buff, 0, buff.Length);
 
-                //lo converto in byte
-                buff = Encoding.ASCII.GetBytes(sendString);
-
-                //invio al client il messaggio
-                sendedBytes = client.Send(buff);
-
-                Array.Clear(buff, 0, buff.Length);
+                }              
+                
             }
-
+            //Termina il programma
 
 
         }
