@@ -54,24 +54,26 @@ namespace ChatbotServer
                 Console.WriteLine("Numero di byte ricevuti:" + receivedBytes);
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta:" + receivedString);
+                
                 if(receivedString != "\r\n")
                 {
                     Array.Clear(buff, 0, buff.Length);
                     sendedBytes = 0;
+                    sendString = "Hai inserito in messaggio che non ho capito.";
                     
-                    if (receivedString.ToUpper() == "QUI")
+                    if (receivedString.ToUpper().Trim() == "QUI")
                     {
                         break;
                     }
-                    else if( receivedString.ToLower()=="ciao")
+                    else if( receivedString.ToLower().Trim() == "ciao")
                     {
                         sendString = "ciao";
                     }
-                    else if (receivedString.ToLower() == "come stai?")
+                    else if (receivedString.ToLower().Trim() == "come stai?")
                     {
                         sendString = "bene";
                     }
-                    else if (receivedString.ToLower() == "che fai?")
+                    else if (receivedString.ToLower().Trim() == "che fai?")
                     {
                         sendString = "niente";
                     }
