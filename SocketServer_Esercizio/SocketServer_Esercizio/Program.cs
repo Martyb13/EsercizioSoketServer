@@ -40,7 +40,8 @@ namespace ChatbotServer
             //siccome è di tippo stream io riceverò un byte array
             //riceverò anche il numero di byte
 
-            byte[] buff = new byte[128];
+            byte[] send = new byte[512];
+            byte[] recv = new byte[512];
             int receivedBytes = 0;
             int sendedBytes = 0;
             string receivedString, sendString;
@@ -50,18 +51,19 @@ namespace ChatbotServer
 
             while (true)
             {
-                receivedBytes = client.Receive(buff);
+                receivedBytes = client.Receive(recv);
                 Console.WriteLine("Numero di byte ricevuti:" + receivedBytes);
-                receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
+                receivedString = Encoding.ASCII.GetString(recv, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta:" + receivedString);
                 
                 if(receivedString != "\r\n")
                 {
-                    Array.Clear(buff, 0, buff.Length);
+                    Array.Clear(send, 0, send.Length);
                     sendedBytes = 0;
-                    sendString = "Hai inserito in messaggio che non ho capito.";
+                    sendString = "Non ho capito il messaggio che hai inserito";
+                   
                     
-                    if (receivedString.ToUpper().Trim() == "QUI")
+                    if (receivedString.ToUpper().Trim() == "QUIT")
                     {
                         break;
                     }
@@ -79,14 +81,13 @@ namespace ChatbotServer
                     }
                    
                     //lo converto in byte
-                    buff = Encoding.ASCII.GetBytes(sendString);
+                    send = Encoding.ASCII.GetBytes(sendString);
 
                     //invio al client il messaggio
-                    sendedBytes = client.Send(buff);
+                    sendedBytes = client.Send(send);
 
-                    Array.Clear(buff, 0, buff.Length);
-
-
+                    Array.Clear(send, 0, send.Length);
+                    Array.Clear(recv, 0, recv.Length);
                 }              
                 
             }
